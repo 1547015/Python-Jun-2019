@@ -1,0 +1,15 @@
+# a = open("C:/Users/suresh Reddy/Desktop/Python-Learning/Jun2019 batch/demo.txt",'r')
+a = open("demo.txt",'r')
+b = open("opt2.txt",'w')
+
+# print(a.read())
+for i in a:
+	i = i.replace('\n','')
+	print([i,"-------------",len(i)//2])
+	if(len(i)%2 ==0):
+		print(i,"hjkhkjh")
+		b.write(i+'\n')
+
+	else:
+		pass	
+b.close()
