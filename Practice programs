@@ -217,3 +217,26 @@ while(b>0):
     b=b//10
 print("Sum is:")
 print(sum(l))
+
+21.Python Program to Count the Occurrences of a Word in a Text File?
+--------------------------------------
+fname = input("Enter file name: ")
+word=input("Enter word to be searched:")
+k = 0
+ 
+with open(fname, 'r') as f:
+    for line in f:
+        words = line.split()
+        for i in words:
+            if(i==word):
+                k=k+1
+print("Occurrences of the word:")
+print(k)
+--------------------------------------------
+22.Python Program to Copy the Contents of One File into Another?
+-------------------------
+with open("test.txt") as f:
+    with open("out.txt", "w") as f1:
+        for line in f:
+            f1.write(line)
+
