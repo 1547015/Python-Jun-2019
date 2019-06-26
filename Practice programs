@@ -14,4 +14,13 @@ if(temp==rev):
 else:
     print("The number isn't a palindrome!")
 -------------------------------------------------------------
-Python Program to Calculate the Average of Numbers in a Given List?
+4.Python Program to Calculate the Average of Numbers in a Given List?
+----------------------------------------Avg of numbers-------------------
+n=int(input("Enter the number of elements to be inserted: "))
+a=[]
+for i in range(0,n):
+    elem=int(input("Enter element: "))
+    a.append(elem)
+avg=sum(a)/n
+print("Average of elements in the list",round(avg,2))
+---------------------------------------------------------------------------
