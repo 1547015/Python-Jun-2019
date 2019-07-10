@@ -1,0 +1,10 @@
+git clone <path>
+pwd
+git status
+git add -A
+git commit -m "commited"
+git push
+git config --global user.name "Suresh Reddy"
+
+
+18002099191
