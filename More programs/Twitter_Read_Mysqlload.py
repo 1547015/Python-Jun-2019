@@ -14,7 +14,7 @@ t = Twitter(
 
 # Get your "home" timeline
 # x=t.statuses.home_timeline()
-data = t.statuses.user_timeline(screen_name="VSReddy_MP")
+data = t.statuses.user_timeline(screen_name="sachin")
 print(data)
 
 
