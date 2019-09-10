@@ -1,0 +1,42 @@
+import mysql.connector
+import csv
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="root",
+  passwd="",
+  database = "test"
+)
+mycursor = mydb.cursor()
+mycursor.execute("DROP TABLE if exists bglr_data")
+mycursor.execute("CREATE TABLE bglr_data (empno VARCHAR(10), ename VARCHAR(10), phone VARCHAR(10))")
+
+from os import listdir
+from os.path import isfile, join
+mypath = "C:/Users/Ujvala Suresh/Desktop/Learning/Python/Testdata/Sourcefiles"
+
+def load_blr(fpath):
+    file1 = open(fpath, "r")
+    row_count = 0
+    for row in file1.readlines():
+        if(row_count==0):
+            row_count += 1
+            continue
+        row.replace("\n","")
+        record_val = row.split(",")
+        print(record_val)
+        mycursor.execute("insert into test.bglr_data(empno,ename,phone) values ('{0}','{1}','{2}')".format(record_val[0],record_val[1],record_val[2]))
+    mydb.commit()
+    print("hello")
+    file1.close()
+
+for each_file in listdir(mypath):
+    if isfile(join(mypath, each_file)):
+        # print(each_file)
+        city_name = each_file.split("_")[0]
+        if(city_name=="BGLR"):
+            load_blr(mypath+"/"+each_file)
+    # elif(city_name =="HYD"):
+    #     load_hyd(mypath+each_file)
+    # elif (city_name == "MUM"):
+    #     load_mum(mypath+each_file)
+
