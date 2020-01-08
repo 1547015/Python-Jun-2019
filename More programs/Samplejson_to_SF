@@ -1,0 +1,47 @@
+import json
+import snowflake.connector
+print("---------------1st")
+ctx = snowflake.connector.connect(account= 'ura36556.us-east-1',
+    user = 'Naveen588',
+    password = 'Naveen588',
+    warehouse = 'COMPUTE_WH',
+    database =  'DEMO_DB',
+    schema =  'PUBLIC',
+    role = 'SYSADMIN'
+)
+
+mycursor = ctx.cursor()
+mycursor.execute("DROP TABLE if exists sample_to_db")
+mycursor.execute("CREATE TABLE sample_to_db (name VARCHAR(255), phone number, email VARCHAR(255))")
+
+
+
+people_string = [
+	{
+		"name":"suresh",
+		"phone":9900099000,
+		"emails":["suresh.d@gmail.com","abcd@gmail.com"]
+	},
+	{
+		"name":"uj",
+		"phone":9963996363,
+		"emails":["uj.d@gmail.com","abcde@gmail.com"]
+	}
+]
+rows = []
+for each in people_string:
+	# print(each)
+	for email in each["emails"]:
+		print(email)
+		rows.append([each["name"], each['phone'], email])
+
+print(rows)
+
+for row in rows:
+	print("loading into Snowflake...")
+	# mycursor.execute("insert into sample_to_db(name, phone, email) values ('"+row[0]+"','"+row[1]+"','"+row[2]+"');")
+	query = """INSERT INTO sample_to_db (name, phone, email)  VALUES (%s, %s, %s) """
+	recordTuple = (row[0], row[1], row[2])
+	mycursor.execute(query, recordTuple)
+ctx.commit()
+
