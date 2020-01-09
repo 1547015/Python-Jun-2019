@@ -1,0 +1,43 @@
+import json
+import datetime as dt
+import requests
+import snowflake.connector
+import csv
+ctx = snowflake.connector.connect(account= 'ura36556.us-east-1',
+    user = 'Naveen588',
+    password = 'Naveen588',
+    warehouse = 'COMPUTE_WH',
+    database =  'DEMO_DB',
+    schema =  'PUBLIC',
+    role = 'SYSADMIN'
+)
+mycursor = ctx.cursor()
+mycursor.execute("DROP TABLE if exists quandal_to_CHRIS_SF")
+
+mycursor.execute("CREATE TABLE quandal_to_CHRIS_SF (id number,dataset_code varchar(255),name varchar(255),bdate datetime,open VARCHAR(255), high VARCHAR(255),low VARCHAR(255), last VARCHAR(255),volume VARCHAR(255), open_Interst VARCHAR(255))")
+
+request = requests.get("https://www.quandl.com/api/v3/datasets/CHRIS/MGEX_IH1.json?api_key=wCR45yAnoiMm11NqfWt4")
+request_text = request.text
+
+data = json.loads(request_text)
+cid = data["dataset"]["id"]
+code = data["dataset"]["dataset_code"]
+name = data["dataset"]["database_code"]
+# print(data["dataset"]["data"])
+count = 10
+for row in data["dataset"]["data"]:
+	count-=1
+	print("Loading row...")
+	print(row)
+	# row[0] = dt.datetime(row[0])
+	query = """insert into quandal_to_CHRIS_SF(id, dataset_code, name, bdate,open,high,low,last,volume,open_Interst) VALUES (%s, %s, %s,%s, %s, %s,%s, %s, %s, %s) """
+	recordTuple = (cid, code, name, row[0],row[1],row[2],row[3],row[4],row[5],row[6])
+	mycursor.execute(query, recordTuple)
+	if(count==0):
+		break
+ctx.commit()
+print("LOAD FINISHED...")
+print("FETCHING FROM DATABASE...")
+data_from_table = mycursor.execute("select * from quandal_to_CHRIS_SF")
+for row in data_from_table:
+	print(row)
