@@ -1,0 +1,23 @@
+class Animal:  
+    def speak(self):  
+        print("Animal Speaking")  
+    def smile(self):
+    	print("Animal smiling")    
+
+
+#The child class Dog inherits the base class Animal  
+class Dog(Animal):  
+    def bark(self):  
+        print("dog barking")  
+    def speak(self):  
+        print("Animal Speaking from child class")    
+
+class Dogchild(Dog):
+	def bark1(self):  
+		print("dog barking from dog child") 
+d = Dog()  
+c = Animal()
+x = Dogchild()
+x.bark()  
+d.speak() 
+#d.eat()  
