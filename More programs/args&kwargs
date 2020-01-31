@@ -1,0 +1,11 @@
+def student(name,*age,**marks):
+	print("functonal arguments calling",name)
+	print("arguments calling",age)
+	print("key word arguments calling:",marks)
+	print(type(age))
+	print(type(marks))
+	print(type(name))
+	for key,value in marks.items():
+		print(key, '   ',value)
+
+student('abc',25,30,40,english = 30,science = 50, social = 60,biology = 80)	
