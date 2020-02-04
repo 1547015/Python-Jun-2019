@@ -1,0 +1,18 @@
+add10 = lambda a,b : a +b + 10    # def add10(a, b): return a+b+10
+print(add10(5, 2))
+
+
+#-----------------------------------------------
+inp = ["san", "send", " ", " "]
+x = map(lambda x: x[0] == "s", inp)
+print(list(x))
+# count = sum(map(lambda x: x[0] == "s", inp))
+
+
+def process(inp):
+	for x in inp:
+		yield x[0]=='s'
+
+count = sum(process(inp))
+print(count)
+#-------------------------------------------------
