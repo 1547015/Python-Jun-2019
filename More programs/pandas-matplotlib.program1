@@ -1,0 +1,46 @@
+import json
+import datetime as dt
+import requests
+import pandas as pd 
+import matplotlib.pyplot as plt
+
+def get_quandl_data():
+	print("requesting data")
+	request = requests.get("https://www.quandl.com/api/v3/datasets/CHRIS/MGEX_IH1.json?api_key=wCR45yAnoiMm11NqfWt4")
+	request_text = request.text
+	print("here")
+	data = json.loads(request_text)
+	cols = data["dataset"]['column_names']
+	print(cols)
+	return data["dataset"]["data"], cols
+
+
+def get_date_high(dataset, cols):
+	df = pd.DataFrame(dataset, columns = cols)
+	print(df.head())
+	high = df["High"][0:10].astype(int)
+
+	dates = df["Date"][0:10]
+	#print(high,dates)
+	return dates, high
+
+
+def plot_graph(dates, high):
+	fig = plt.figure()
+	ax = fig.add_axes([0,0,1,1])
+
+	ax.set_xlabel('date')
+	ax.set_ylabel('no. of highs')
+	ax.bar(dates,high)
+	plt.show()
+	
+
+dataset, cols = get_quandl_data()
+
+dates, high = get_date_high(dataset, cols)
+
+plot_graph(dates, high)
+
+
+
+
